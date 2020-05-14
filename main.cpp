@@ -19,6 +19,9 @@ signal_callback_handler(int signum)
 
 
 void testMesh(){
+    meshParser.isMesh4Bytes = false; // 2bytes for the id
+    meshParser.isEmitMeshSourceId = true; // received data is structured mesh data
+
     char *data = "1234567890abcdefghijklmnopqrstuvwxyz";
     char mesh_buffer[10*1024];
     unsigned int sourceId = 0;
