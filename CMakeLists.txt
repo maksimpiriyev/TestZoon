@@ -3,6 +3,6 @@ project(TestZoon)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(TestZoon main.cpp serial_port.cpp)
+add_executable(TestZoon main.cpp serial_port.cpp  mesh.h circular_buffer.h)
 
 target_link_libraries(TestZoon   pthread )

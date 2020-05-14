@@ -3,11 +3,12 @@
 #include <thread>
 #include <mutex>
 #include "serial_port.h"
+#include "mesh.h"
 //#include <curses.h>
 
 SerialPort serial1("/dev/cu.usbmodem2061348A4B4B1", 115200);
 SerialPort serial2("/dev/cu.usbmodem2062349C4B4B1",115200);
-
+MeshParser meshParser;
 void
 signal_callback_handler(int signum)
 {
@@ -17,9 +18,33 @@ signal_callback_handler(int signum)
 }
 
 
+void testMesh(){
+    char *data = "1234567890abcdefghijklmnopqrstuvwxyz";
+    char mesh_buffer[10*1024];
+    unsigned int sourceId = 0;
+
+    // adding data for destinationId: 5
+    int ml = meshParser.addMesh((uint8_t *)data,strlen(data),35005,(uint8_t *)mesh_buffer);
+    meshParser.addToBuffer((uint8_t *)mesh_buffer,ml);
+
+    // adding data for destinationId: 7
+    ml = meshParser.addMesh((uint8_t *)data,strlen(data),7,(uint8_t *)mesh_buffer);
+    meshParser.addToBuffer((uint8_t *)mesh_buffer,ml);
+
+    // Receiving and parsing
+    while(ml = meshParser.receivedMessage((uint8_t *)mesh_buffer,1024,sourceId)){
+        printf("source %d : ",sourceId);
+        for(int i=0;i<ml;i++){
+            printf("%c",mesh_buffer[i]);
+        }
+        printf("\n");
+    }
+}
 std::mutex  mtx;
 int main() {
 
+//    testMesh();
+//    return 0;
     signal(SIGINT, signal_callback_handler);
   //  SerialPort serial1("/dev/ttyACM0", 115200);
 
@@ -31,7 +56,6 @@ int main() {
         char buf[1024] = {0};
         char *data = "1234567890abcdefghijklmnopqrstuvwxyz";
         while(true) {
-
             int l = serial1.receive((uint8_t *) buf, 1024);
             if (l > 0) {
                 std::lock_guard<std::mutex> lock(mtx);
