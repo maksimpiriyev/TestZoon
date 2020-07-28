@@ -22,7 +22,7 @@ public:
 
 
 
-    void addToBuffer(uint8_t *data,unsigned int length){
+    void addToBuffer(uint8_t *data, int length){
         for (int i=0; i < length; i++) {
             buffer += data[i];
         }
@@ -100,7 +100,7 @@ public:
     }
 
 
-    int addMesh(uint8_t *data, int length, unsigned int destinationId, uint8_t *mesh_data) {
+    int toMeshFormat(uint8_t *data, int length, unsigned int destinationId, uint8_t *mesh_data) {
         int i = 0;
         mesh_data[i++] = 0x7E; // MESH MARK
         if (isMesh4Bytes) {

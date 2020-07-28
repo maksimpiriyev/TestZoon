@@ -27,11 +27,13 @@ void testMesh(){
     unsigned int sourceId = 0;
 
     // adding data for destinationId: 5
-    int ml = meshParser.addMesh((uint8_t *)data,strlen(data),35005,(uint8_t *)mesh_buffer);
+    int destinationId = 55;
+    int ml = meshParser.toMeshFormat((uint8_t *)data,strlen(data),destinationId,(uint8_t *)mesh_buffer);
     meshParser.addToBuffer((uint8_t *)mesh_buffer,ml);
 
     // adding data for destinationId: 7
-    ml = meshParser.addMesh((uint8_t *)data,strlen(data),7,(uint8_t *)mesh_buffer);
+    destinationId = 7;
+    ml = meshParser.toMeshFormat((uint8_t *)data,strlen(data),destinationId,(uint8_t *)mesh_buffer);
     meshParser.addToBuffer((uint8_t *)mesh_buffer,ml);
 
     // Receiving and parsing
