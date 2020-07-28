@@ -33,3 +33,25 @@ will print
 source 35005 : 1234567890abcdefghijklmnopqrstuvwxyz
 source 7 : 1234567890abcdefghijklmnopqrstuvwxyz
 ```
+
+mesh_test.cpp is the file sends and receives with the mesh parser
+here are the settings parameter  for pairs
+```
+{
+"isMesh":true,
+"meshId":35,
+"isMesh4Bytes":false,
+"isMeshSourceEmit":true
+}
+```
+
+and
+
+```
+{
+"isMesh":true,
+"meshId":25,
+"isMesh4Bytes":false,
+"isMeshSourceEmit":true
+}
+```
